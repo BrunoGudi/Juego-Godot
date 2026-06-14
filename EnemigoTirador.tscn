@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://c1uuyjbb1q6mu"]
+
+[ext_resource type="Script" uid="uid://cvhtdm7tk4u6s" path="res://enemigo_tirador.gd" id="1_mdxgd"]
+[ext_resource type="Texture2D" uid="uid://2dfvx2g6x53v" path="res://Assets/Resources/Players/2 Owlet_Monster/Owlet_Monster_Walk_6.png" id="2_wohiy"]
+[ext_resource type="Texture2D" uid="uid://cl0q25w5wbvug" path="res://Assets/Resources/Players/2 Owlet_Monster/Owlet_Monster_Idle_4.png" id="3_y44ah"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dx7f3"]
+atlas = ExtResource("2_wohiy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vxj3"]
+atlas = ExtResource("2_wohiy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tngnq"]
+atlas = ExtResource("2_wohiy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4msl"]
+atlas = ExtResource("2_wohiy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8dac"]
+atlas = ExtResource("2_wohiy")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_764ue"]
+atlas = ExtResource("2_wohiy")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yq7y8"]
+atlas = ExtResource("3_y44ah")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5k4au"]
+atlas = ExtResource("3_y44ah")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knkiq"]
+atlas = ExtResource("3_y44ah")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8vip"]
+atlas = ExtResource("3_y44ah")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_klevd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dx7f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vxj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tngnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4msl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8dac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_764ue")
+}],
+"loop": true,
+"name": &"Movimiento",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yq7y8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5k4au")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knkiq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8vip")
+}],
+"loop": true,
+"name": &"Quieto",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrinv"]
+size = Vector2(16, 24)
+
+[node name="EnemigoTirador" type="CharacterBody2D" unique_id=603694510]
+script = ExtResource("1_mdxgd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=221282512]
+sprite_frames = SubResource("SpriteFrames_klevd")
+animation = &"Quieto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1243997650]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_qrinv")

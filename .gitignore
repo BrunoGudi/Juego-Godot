@@ -1,0 +1,13 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Ignorar archivos de exportación (si llegás a compilar un .exe o .zip)
+export_presets.cfg
+build/
+
+# Ignorar archivos del sistema o editores
+.DS_Store
+.vscode/
+.idea/
+*.VisualStudio

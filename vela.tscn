@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cmu20746nvrjg"]
+
+[ext_resource type="Texture2D" uid="uid://cb23lkuo0qnex" path="res://Assets/Resources/Maps/Catacumba/candleA_01.png" id="1_1e48n"]
+[ext_resource type="Script" uid="uid://bgyi7l2b3voxq" path="res://luz_parpadeante.gd" id="2_o6w37"]
+
+[sub_resource type="Gradient" id="Gradient_o6w37"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kkby4"]
+gradient = SubResource("Gradient_o6w37")
+fill = 1
+fill_from = Vector2(0.50869566, 0.51304346)
+fill_to = Vector2(0.90434784, 0.08260869)
+metadata/_snap_count = 2
+
+[node name="Vela" type="Node2D" unique_id=488496854]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=734179930]
+texture = ExtResource("1_1e48n")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D" unique_id=179577183]
+position = Vector2(-9.536743e-07, -5.2452087e-06)
+scale = Vector2(0.7772022, 0.777202)
+color = Color(0.8777944, 0.61684304, 0.220938, 1)
+energy = 0.8
+texture = SubResource("GradientTexture2D_kkby4")
+texture_scale = 1.93
+script = ExtResource("2_o6w37")
