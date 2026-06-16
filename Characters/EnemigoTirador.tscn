@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c1uuyjbb1q6mu"]
 
-[ext_resource type="Script" uid="uid://cvhtdm7tk4u6s" path="res://enemigo_tirador.gd" id="1_mdxgd"]
+[ext_resource type="Script" uid="uid://cvhtdm7tk4u6s" path="res://Characters/enemigo_tirador.gd" id="1_mdxgd"]
 [ext_resource type="Texture2D" uid="uid://2dfvx2g6x53v" path="res://Assets/Resources/Players/2 Owlet_Monster/Owlet_Monster_Walk_6.png" id="2_wohiy"]
 [ext_resource type="Texture2D" uid="uid://cl0q25w5wbvug" path="res://Assets/Resources/Players/2 Owlet_Monster/Owlet_Monster_Idle_4.png" id="3_y44ah"]
 
