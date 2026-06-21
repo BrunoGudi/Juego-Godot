@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b3p4oxp182xpg"]
+
+[ext_resource type="Script" uid="uid://b8wop6pu8fcrp" path="res://roca.gd" id="1_h375u"]
+[ext_resource type="Texture2D" uid="uid://dt7cjywehtsiu" path="res://Assets/Resources/Players/2 Owlet_Monster/Rock1.png" id="2_hew7i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nbtsl"]
+radius = 4.8662095
+
+[node name="Roca" type="Area2D" unique_id=209144790]
+script = ExtResource("1_h375u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1306998662]
+position = Vector2(5.9604645e-08, 5.9604645e-08)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_hew7i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=20567360]
+scale = Vector2(1.25, 1.25)
+shape = SubResource("CircleShape2D_nbtsl")
