@@ -2,10 +2,23 @@ extends character
 
 @onready var ataque_area: Area2D = $AtaqueArea
 @onready var salud_ui: Label = $CanvasLayer/SaludUI
+@onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
 
 func _ready() -> void:
+	max_speed = 130 
 	super._ready() # Inicializa current_health desde character.gd
 	actualizar_ui_salud()
+	
+	# Asegurarnos de que el panel esté oculto al iniciar y conectar el botón
+	if game_over_panel:
+		game_over_panel.visible = false
+		var boton = game_over_panel.find_child("BotonReiniciar")
+		if boton:
+			boton.pressed.connect(_on_restart_button_pressed)
+
+var speed_boost_active: bool = false
+var double_damage_active: bool = false
+
 
 # Función para recibir golpes y refrescar la UI
 func recibir_golpe(danio: int, origen_ataque: Vector2) -> void:
@@ -95,9 +108,36 @@ func ejecutar_ataque() -> void:
 
 	# 6. Detectamos colisiones y aplicamos daño
 	var cuerpos = ataque_area.get_overlapping_bodies()
+	var danio_final = 2 if double_damage_active else 1
 	for cuerpo in cuerpos:
 		if cuerpo != self and cuerpo.has_method("take_damage"):
-			cuerpo.take_damage(1)
+			cuerpo.take_damage(danio_final)
+
+# Recupera vida hasta el máximo de 5 corazones
+func curar(cantidad: int) -> void:
+	current_health = min(max_health, current_health + cantidad)
+	actualizar_ui_salud()
+	print("¡Jugador curado! Vida actual: ", current_health)
+
+# Aumenta la velocidad en +60 por 7 segundos
+func aplicar_boost_velocidad() -> void:
+	if not speed_boost_active:
+		speed_boost_active = true
+		max_speed += 60
+		print("¡Boost de velocidad activo!")
+		await get_tree().create_timer(7.0).timeout
+		max_speed -= 60
+		speed_boost_active = false
+		print("¡Boost de velocidad terminado!")
+
+# Duplica el daño de los golpes por 7 segundos
+func aplicar_daño_doble() -> void:
+	if not double_damage_active:
+		double_damage_active = true
+		print("¡Daño doble activo!")
+		await get_tree().create_timer(7.0).timeout
+		double_damage_active = false
+		print("¡Daño doble terminado!")
 
 
 func morir() -> void:
@@ -118,12 +158,17 @@ func morir() -> void:
 	if animated_sprite.sprite_frames.has_animation("Die"):
 		animated_sprite.play("Die")
 		await animated_sprite.animation_finished
+	
 	else:
 		# Si aún no has creado la animación, espera un segundo y medio por seguridad
 		await get_tree().create_timer(1.5).timeout
 		
-	# 5. Esperamos un segundo extra en pantalla negra o quieto tras morir
+	# 5. Esperamos un segundo extra
 	await get_tree().create_timer(1.0).timeout
 	
-	# 6. Finalmente reiniciamos el nivel
+	# 6. Mostramos el menú de Game Over
+	if game_over_panel:
+		game_over_panel.visible = true
+
+func _on_restart_button_pressed() -> void:
 	get_tree().reload_current_scene()

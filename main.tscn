@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cmmonxpmgw6u8" path="res://Characters/player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://n5hxa28q5b2k" path="res://Characters/Enemigo.tscn" id="4_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c1uuyjbb1q6mu" path="res://Characters/EnemigoTirador.tscn" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://bjhq2t8p30n02" path="res://enemy_spawner.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://4alah5f10mb0" path="res://bonus_spawner.gd" id="7_272bh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
 texture = ExtResource("1_0xm2m")
@@ -1076,3 +1078,9 @@ shape = SubResource("RectangleShape2D_272bh")
 [node name="BordeAbajo" type="CollisionShape2D" parent="LimitesMapaCostados" unique_id=1761182000]
 position = Vector2(640, 712)
 shape = SubResource("RectangleShape2D_272bh")
+
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=183992253]
+script = ExtResource("6_7mycd")
+
+[node name="BonusSpawner" type="Node2D" parent="." unique_id=872021090]
+script = ExtResource("7_272bh")

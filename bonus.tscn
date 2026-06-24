@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dyd3o2kgawhsn"]
+
+[ext_resource type="Script" uid="uid://e3rr57km7x8h" path="res://bonus.gd" id="1_7ah8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6yrp"]
+size = Vector2(53.333332, 53.33333)
+
+[node name="Bonus" type="Area2D" unique_id=1027433837]
+scale = Vector2(0.3, 0.3)
+collision_mask = 2
+script = ExtResource("1_7ah8e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1332645809]
+position = Vector2(-7.947286e-07, 0)
+shape = SubResource("RectangleShape2D_e6yrp")
+
+[node name="Label" type="Label" parent="." unique_id=1429698466]
+offset_left = -26.666666
+offset_top = -26.666666
+offset_right = 26.666662
+offset_bottom = 26.666662
+theme_override_font_sizes/font_size = 45

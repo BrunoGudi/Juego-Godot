@@ -27,14 +27,25 @@ func _physics_process(delta: float) -> void:
 		if distance <= attack_range and attack_cooldown_timer <= 0.0:
 			iniciar_ataque()
 		else:
-			# Si no estamos atacando, nos movemos hacia el jugador
-			mov_direction = global_position.direction_to(player.global_position)
+			# Lógica de rodear: cada enemigo elige uno de los 8 ángulos en círculo
+			var angulo = float(get_instance_id() % 8) * (PI / 4.0)
+			var offset = Vector2(cos(angulo), sin(angulo)) * 22.0 # Radio cuerpo a cuerpo
+			var posicion_objetivo = player.global_position + offset
 			
-			# Control de orientación (voltear sprite usando el animated_sprite heredado)
+			var dist_al_objetivo = global_position.distance_to(posicion_objetivo)
+			if dist_al_objetivo <= 5.0:
+				# Si ya llegó a su punto del círculo, se detiene
+				mov_direction = Vector2.ZERO
+			else:
+				# Si no, camina hacia su punto asignado
+				mov_direction = global_position.direction_to(posicion_objetivo)
+			
+			# Control de orientación
 			if mov_direction.x > 0:
 				animated_sprite.flip_h = false
 			elif mov_direction.x < 0:
 				animated_sprite.flip_h = true
+
 	else:
 		# Si no hay jugador o estamos atacando, no nos movemos voluntariamente
 		mov_direction = Vector2.ZERO

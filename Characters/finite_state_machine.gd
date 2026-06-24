@@ -2,7 +2,7 @@ extends FiniteStateMachine
 
 const RETROCESO_DURACION: float = 0.25
 var retroceso_timer: float = 0.0
-const ATAQUE_DURACION: float = 0.4
+const ATAQUE_DURACION: float = 0.2
 var ataque_timer: float = 0.0
 
 
@@ -84,6 +84,7 @@ func _enter_state(_previous_state: int, new_state: int) -> void:
 		states.retroceso:
 			# Reproduce la animación de recibir golpe
 			parent.animated_sprite.play("Hurt")
+			parent.velocity = parent.knockback_velocity
 		states.atacar:
 			ataque_timer = ATAQUE_DURACION
 			parent.animated_sprite.play("Ataque")
