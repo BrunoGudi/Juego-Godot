@@ -45,10 +45,15 @@ func aparecer_enemigo(player: CharacterBody2D) -> void:
 	var todas_las_celdas = tilemap.get_used_cells()
 	var celdas_suelo: Array[Vector2i] = []
 
+	var physics_layers_count = 0
+	if tilemap.tile_set:
+		physics_layers_count = tilemap.tile_set.get_physics_layers_count()
+
 	for celda in todas_las_celdas:
 		var tile_data = tilemap.get_cell_tile_data(celda)
-		if tile_data and tile_data.get_collision_polygons_count(0) == 0:
-			celdas_suelo.append(celda)
+		if tile_data:
+			if physics_layers_count == 0 or tile_data.get_collision_polygons_count(0) == 0:
+				celdas_suelo.append(celda)
 
 	if celdas_suelo.is_empty():
 		return

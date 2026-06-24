@@ -22,12 +22,17 @@ func generar_velas_aleatorias() -> void:
 	var todas_las_celdas = tilemap.get_used_cells()
 	var celdas_suelo: Array[Vector2i] = []
 	
+	# Obtenemos la cantidad de capas físicas del TileSet para evitar errores si no hay ninguna
+	var physics_layers_count = 0
+	if tilemap.tile_set:
+		physics_layers_count = tilemap.tile_set.get_physics_layers_count()
+	
 	# 3. Filtramos para quedarnos SOLO con las casillas de suelo caminable (sin colisiones)
 	for celda in todas_las_celdas:
 		var tile_data = tilemap.get_cell_tile_data(celda)
 		if tile_data:
-			# Si la casilla no tiene colisiones en la capa física 0, significa que es suelo
-			if tile_data.get_collision_polygons_count(0) == 0:
+			# Si no hay capas de física o la casilla no tiene colisiones en la capa 0, es suelo caminable
+			if physics_layers_count == 0 or tile_data.get_collision_polygons_count(0) == 0:
 				celdas_suelo.append(celda)
 				
 	# Si por algún motivo no detecta colisiones, usamos todas las casillas para evitar fallos
