@@ -12,6 +12,7 @@ var player: CharacterBody2D = null
 
 func _init() -> void:
 	max_speed = 60 # Reducimos la velocidad (por defecto en character.gd es 100)
+	max_health = 3
 
 func _ready() -> void:
 	super._ready() # Inicializa salud de character.gd

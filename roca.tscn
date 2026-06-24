@@ -7,6 +7,7 @@
 radius = 4.8662095
 
 [node name="Roca" type="Area2D" unique_id=209144790]
+collision_mask = 3
 script = ExtResource("1_h375u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1306998662]
