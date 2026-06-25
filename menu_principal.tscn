@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://ddp6xtfn8lnoh"]
+
+[ext_resource type="Script" uid="uid://d3e2ftvhouoiu" path="res://menu_principal.gd" id="1_bj1uy"]
+
+[node name="MenuPrincipal" type="Control" unique_id=532424520]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bj1uy")
+
+[node name="Fondo" type="ColorRect" parent="." unique_id=271176042]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06806438, 4.813075e-07, 0.4518327, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=360836507]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Titulo" type="Label" parent="VBoxContainer" unique_id=1551756263]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "¡Bienvenido al Juego!"
+
+[node name="BotonNewGame" type="Button" parent="VBoxContainer" unique_id=810013573]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Iniciar Juego"
+
+[connection signal="pressed" from="VBoxContainer/BotonNewGame" to="." method="_on_boton_new_game_pressed"]
