@@ -53,7 +53,11 @@ func aparecer_enemigo(player: CharacterBody2D) -> void:
 		var tile_data = tilemap.get_cell_tile_data(celda)
 		if tile_data:
 			if physics_layers_count == 0 or tile_data.get_collision_polygons_count(0) == 0:
-				celdas_suelo.append(celda)
+				var pos_global = tilemap.global_position + tilemap.map_to_local(celda)
+				# NUEVO: Comprobar que esté dentro de los límites del cuadro jugable
+				if pos_global.x >= 48.0 and pos_global.x <= 1236.0 and pos_global.y >= 44.0 and pos_global.y <= 682.0:
+					celdas_suelo.append(celda)
+
 
 	if celdas_suelo.is_empty():
 		return

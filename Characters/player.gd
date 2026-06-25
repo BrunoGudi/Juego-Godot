@@ -3,11 +3,14 @@ extends character
 @onready var ataque_area: Area2D = $AtaqueArea
 @onready var salud_ui: Label = $CanvasLayer/SaludUI
 @onready var game_over_panel: Control = $CanvasLayer/GameOverPanel
+@onready var bonus_ui: Label = $CanvasLayer/BonusUI
+
 
 func _ready() -> void:
 	max_speed = 130 
 	super._ready() # Inicializa current_health desde character.gd
 	actualizar_ui_salud()
+	actualizar_ui_bonus()
 	
 	# Asegurarnos de que el panel esté oculto al iniciar y conectar el botón
 	if game_over_panel:
@@ -22,11 +25,11 @@ var double_damage_active: bool = false
 
 # Función para recibir golpes y refrescar la UI
 func recibir_golpe(danio: int, origen_ataque: Vector2) -> void:
-	print("¡El jugador recibió un golpe! Vida antes: ", current_health)
+	# Si ya está muerto, ignoramos cualquier golpe extra
+	if current_health <= 0:
+		return
 	super.recibir_golpe(danio, origen_ataque) # Ejecuta el retroceso y resta vida
-	print("Vida después: ", current_health, " | SaludUI es nulo?: ", salud_ui == null)
 	actualizar_ui_salud() # Actualiza los corazones en pantalla
-
 
 # Dibuja tantos corazones como vida actual tenga el jugador
 func actualizar_ui_salud() -> void:
@@ -39,7 +42,6 @@ func actualizar_ui_salud() -> void:
 func get_input() -> void:
 	# 1. Obtenemos el vector de movimiento usando las acciones de tu Input Map
 	mov_direction = Input.get_vector("mover_izquierda", "mover_derecha", "mover_arriba", "mover_abajo")
-		
 	# 2. Controlamos el flip (giro horizontal) del sprite según la dirección en X
 	if mov_direction.x > 0:
 		animated_sprite.flip_h = false
@@ -106,12 +108,35 @@ func ejecutar_ataque() -> void:
 	elif direccion_ataque == Vector2.RIGHT:
 		animated_sprite.flip_h = false
 
-	# 6. Detectamos colisiones y aplicamos daño
-	var cuerpos = ataque_area.get_overlapping_bodies()
+	# 6. Detectamos colisiones de forma instantánea usando PhysicsDirectSpaceState2D
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	query.shape = colision.shape
+	query.transform = colision.global_transform
+	query.collision_mask = ataque_area.collision_mask # Filtra solo a los enemigos
+	
+	var resultados = space_state.intersect_shape(query)
 	var danio_final = 2 if double_damage_active else 1
-	for cuerpo in cuerpos:
-		if cuerpo != self and cuerpo.has_method("take_damage"):
-			cuerpo.take_damage(danio_final)
+	
+	# Usamos una lista auxiliar para evitar dañar dos veces al mismo enemigo en un solo golpe
+	var cuerpos_golpeados = []
+	for res in resultados:
+		var cuerpo = res.collider
+		if cuerpo != self and not cuerpo in cuerpos_golpeados:
+			cuerpos_golpeados.append(cuerpo)
+			if cuerpo.has_method("take_damage"):
+				cuerpo.take_damage(danio_final)
+
+
+# Muestra visualmente qué bonus están activos en pantalla
+func actualizar_ui_bonus() -> void:
+	if bonus_ui:
+		var texto = ""
+		if speed_boost_active:
+			texto += "⚡ Veloz "
+		if double_damage_active:
+			texto += "⚔️ Daño x2 "
+		bonus_ui.text = texto
 
 # Recupera vida hasta el máximo de 5 corazones
 func curar(cantidad: int) -> void:
@@ -124,25 +149,27 @@ func aplicar_boost_velocidad() -> void:
 	if not speed_boost_active:
 		speed_boost_active = true
 		max_speed += 60
+		actualizar_ui_bonus() # <-- Actualiza UI (Activo)
 		print("¡Boost de velocidad activo!")
 		await get_tree().create_timer(7.0).timeout
 		max_speed -= 60
 		speed_boost_active = false
-		print("¡Boost de velocidad terminado!")
+		actualizar_ui_bonus() # <-- Actualiza UI (Terminado)
+
 
 # Duplica el daño de los golpes por 7 segundos
 func aplicar_daño_doble() -> void:
 	if not double_damage_active:
 		double_damage_active = true
+		actualizar_ui_bonus() # <-- Actualiza UI (Activo)
 		print("¡Daño doble activo!")
 		await get_tree().create_timer(7.0).timeout
 		double_damage_active = false
-		print("¡Daño doble terminado!")
+		actualizar_ui_bonus() # <-- Actualiza UI (Terminado)
+
 
 
 func morir() -> void:
-	print("¡El jugador ha muerto! Fin del juego.")
-	
 	# 1. Desactivamos las físicas y los controles del jugador para que no pueda moverse
 	set_physics_process(false)
 	

@@ -85,5 +85,4 @@ func take_damage(amount: int) -> void:
 	recibir_golpe(amount, origen)
 
 func morir() -> void:
-	print(name, " ha muerto.")
 	queue_free()
