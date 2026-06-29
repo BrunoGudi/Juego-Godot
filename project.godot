@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Juego proyecto ProgAvanzada"
-run/main_scene="uid://jdkapm7gjp0e"
+run/main_scene="uid://ddp6xtfn8lnoh"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

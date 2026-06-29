@@ -300,7 +300,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0qaj4"]
-size = Vector2(34.25, 12)
+size = Vector2(34.125, 11)
 
 [node name="Player" unique_id=850028038 instance=ExtResource("1_5mj4t")]
 collision_layer = 2
@@ -327,13 +327,12 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AtaqueArea" index="0" unique_id=661666202]
-position = Vector2(10, 1)
+position = Vector2(10.0625, 0.5)
 shape = SubResource("RectangleShape2D_0qaj4")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="5" unique_id=1878366465]
 
 [node name="SaludUI" type="Label" parent="CanvasLayer" index="0" unique_id=382661181]
-visible = false
 custom_minimum_size = Vector2(20, 20)
 offset_right = 40.0
 offset_bottom = 23.0
@@ -341,7 +340,6 @@ theme_override_font_sizes/font_size = 24
 text = "❤️❤️❤️❤️❤️"
 
 [node name="GameOverPanel" type="Control" parent="CanvasLayer" index="1" unique_id=1831495235]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -379,3 +377,10 @@ vertical_alignment = 1
 [node name="BotonReiniciar" type="Button" parent="CanvasLayer/GameOverPanel/CenterContainer/VBoxContainer" index="1" unique_id=69864279]
 layout_mode = 2
 text = "REINICIAR"
+
+[node name="BonusUI" type="Label" parent="CanvasLayer" index="2" unique_id=525789504]
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 50.0
+offset_bottom = 63.0
+theme_override_font_sizes/font_size = 24
