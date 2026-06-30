@@ -14,7 +14,6 @@ func _ready() -> void:
 			BonusType.HEAL:
 				label.text = "❤️"
 
-	# Conectar señal de colisión
 	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node2D) -> void:
